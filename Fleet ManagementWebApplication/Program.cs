@@ -1,7 +1,17 @@
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Fleet_ManagementWebApplication.Services;
 
-app.MapGet("/", () => "Hello World!");
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddScoped<IDbService, DbService>();
+        builder.Services.AddScoped<IVehicleService, VehicleService>();
+        var app = builder.Build();
 
-app.Run();
+        app.MapGet("/", () => "Hello World!");
+
+        app.Run();
+    }
+}

@@ -2,7 +2,7 @@
 
 namespace Fleet_ManagementWebApplication.Services
 {
-    public class VehicleService
+    public class VehicleService : IVehicleService
     {
         private readonly IDbService _dbService;
 
@@ -20,7 +20,7 @@ namespace Fleet_ManagementWebApplication.Services
             return true;
         }
 
-        public async Task<List<Vehicles>> GetVehicleList()
+        public async Task<List<Vehicles>> GetVehiclesList()
         {
             var vehicleList = await _dbService.GetAll<Vehicles>("SELECT * FROM vehicles", new { });
             return vehicleList;
@@ -33,9 +33,9 @@ namespace Fleet_ManagementWebApplication.Services
             return vehicleList;
         }
 
-        public async Task<Vehicles> UpdateEmployee(Vehicles vehicle)
+        public async Task<Vehicles> UpdateVehicle(Vehicles vehicle)
         {
-            var updateEmployee =
+            var updateVehicle =
                 await _dbService.EditData(
                     "Update vehicles SET vehiclenumber=@VehicleNumber, vehicletype=@VehicleType WHERE vehicleid=@VehicleID",
                     vehicle);
