@@ -1,4 +1,6 @@
-﻿using Fleet_ManagementWebApplication.Models;
+﻿using Dapper;
+using Fleet_ManagementWebApplication.Models;
+using Npgsql;
 
 namespace Fleet_ManagementWebApplication.Services
 {
@@ -15,21 +17,24 @@ namespace Fleet_ManagementWebApplication.Services
         {
             var result =
                 await _dbService.EditData(
-                    "INSERT INTO vehicles (vehiclenumber,vehicletype) VALUES (@VehicleNumber, @VehicleType)",
+                    "INSERT INTO Vehicles (VehicleNumber,VehicleType) VALUES (@VehicleNumber, @VehicleType)",
                     vehicle);
             return true;
         }
 
-        public async Task<List<Vehicles>> GetVehiclesList()
+        public async Task<IEnumerable<Vehicles>> GetVehiclesList()
         {
-            var vehicleList = await _dbService.GetAll<Vehicles>("SELECT * FROM vehicles", new { });
+            var vehicleList = await _dbService.GetAll<Vehicles>("SELECT * FROM Vehicles");
             return vehicleList;
         }
 
 
         public async Task<Vehicles> GetVehicle(int id)
         {
-            var vehicleList = await _dbService.GetAsync<Vehicles>("SELECT * FROM vehicles where vehicleid=@id", new { id });
+            var vehicleList = await _dbService.GetAsync<Vehicles>("SELECT * FROM Vehicles where vehicleid=@id", new { id });
+            Console.WriteLine("hhhhhhhhhh");
+
+            Console.WriteLine(vehicleList);
             return vehicleList;
         }
 
