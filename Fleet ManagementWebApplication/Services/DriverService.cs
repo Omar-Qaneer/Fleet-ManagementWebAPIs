@@ -34,7 +34,7 @@ namespace Fleet_ManagementWebApplication.Services
 
         public async Task<IEnumerable<Driver>> GetDriversList()
         {
-            var driverList = await _dbService.GetAll<Driver>("SELECT * FROM driver");
+            var driverList = await _dbService.GetAll<Driver>("SELECT * FROM drivers");
             return driverList;
         }
 

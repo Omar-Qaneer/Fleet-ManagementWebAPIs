@@ -2,8 +2,8 @@
 {
     public class Vehicles
     {
-        int VehicleID { get; set; }
-        int VehicleNumber { get; set; }
-        string VehicleType { get; set; }
+        public int VehicleID { get; set; }
+        public int VehicleNumber { get; set; }
+        public string VehicleType { get; set; }
     }
 }

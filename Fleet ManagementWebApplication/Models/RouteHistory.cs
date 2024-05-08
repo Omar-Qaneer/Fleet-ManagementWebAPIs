@@ -9,7 +9,7 @@
         string VehicleSpeed { get; set; }
         int Epoch { get; set; }
         string Address { get; set; }
-        int Latitude { get; set; }
-        int Longitude { get; set; }
+        float Latitude { get; set; }
+        float Longitude { get; set; }
     }
 }
