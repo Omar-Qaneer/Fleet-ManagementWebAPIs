@@ -2,11 +2,11 @@
 {
     public class VehiclesInformations
     {
-        int ID { get; set; }
-        int VehicleID { get; set; }
-        int DriverID { get; set; }
-        string VehicleMake { get; set; }
-        string VehicleModel { get; set; }
-        int PurchaseDate { get; set; }
+        public int ID { get; set; }
+        public int VehicleID { get; set; }
+        public int DriverID { get; set; }
+        public string VehicleMake { get; set; }
+        public string VehicleModel { get; set; }
+        public int PurchaseDate { get; set; }
     }
 }

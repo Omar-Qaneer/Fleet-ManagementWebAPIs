@@ -2,8 +2,8 @@
 {
     public class Driver
     {
-        int DriverID { get; set; }
-        string DriverName { get; set; }
-        int PhoneNumber { get; set; }
+        public int DriverID { get; set; }
+        public string DriverName { get; set; }
+        public int PhoneNumber { get; set; }
     }
 }

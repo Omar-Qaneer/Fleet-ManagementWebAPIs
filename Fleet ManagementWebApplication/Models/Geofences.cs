@@ -2,13 +2,13 @@
 {
     public class Geofences
     {
-        int GeofenceID { get; set; }
-        string GeofenceType { get; set; }
-        int AddedDate { get; set; }
-        string StrockColor { get; set; }
-        int StrockOpacity { get; set; }
-        int StrockWeight { get; set; }
-        string FillColor { get; set; }
-        int FillOpacity { get; set; }
+        public int GeofenceID { get; set; }
+        public string GeofenceType { get; set; }
+        public int AddedDate { get; set; }
+        public string StrockColor { get; set; }
+        public int StrockOpacity { get; set; }
+        public int StrockWeight { get; set; }
+        public string FillColor { get; set; }
+        public int FillOpacity { get; set; }
     }
 }

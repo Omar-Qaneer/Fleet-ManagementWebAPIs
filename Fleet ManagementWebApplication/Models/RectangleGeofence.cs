@@ -2,11 +2,11 @@
 {
     public class RectangleGeofence
     {
-        int ID { get; set; }
-        int GeofenceID { get; set; }
-        int North { get; set; }
-        int East { get; set; }
-        int West { get; set; }
-        int South { get; set; }
+        public int ID { get; set; }
+        public int GeofenceID { get; set; }
+        public int North { get; set; }
+        public int East { get; set; }
+        public int West { get; set; }
+        public int South { get; set; }
     }
 }

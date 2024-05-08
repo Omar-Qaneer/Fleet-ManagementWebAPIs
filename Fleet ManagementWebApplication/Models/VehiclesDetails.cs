@@ -2,13 +2,13 @@
 {
     public class VehiclesDetails
     {
-        int VehicleID { get; set; }
-        int VehicleNumber { get; set; }
-        string VehicleType { get; set; }
-        int LastDirection { get; set; }
-        string LastStatus { get; set; }
-        string LastAddress { get; set; }
-        float LastLatitude { get; set; }
-        float LastLongitude { get; set; }
+        public int VehicleID { get; set; }
+        public int VehicleNumber { get; set; }
+        public string VehicleType { get; set; }
+        public int LastDirection { get; set; }
+        public string LastStatus { get; set; }
+        public string LastAddress { get; set; }
+        public float LastLatitude { get; set; }
+        public float LastLongitude { get; set; }
     }
 }

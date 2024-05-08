@@ -2,14 +2,14 @@
 {
     public class RouteHistory
     {
-        int RouteHistoryID { get; set; }
-        int VehicleID { get; set; }
-        int VehicleDirection { get; set; }
-        char Status { get; set; }
-        string VehicleSpeed { get; set; }
-        int Epoch { get; set; }
-        string Address { get; set; }
-        float Latitude { get; set; }
-        float Longitude { get; set; }
+        public int RouteHistoryID { get; set; }
+        public int VehicleID { get; set; }
+        public int VehicleDirection { get; set; }
+        public char Status { get; set; }
+        public string VehicleSpeed { get; set; }
+        public int Epoch { get; set; }
+        public string Address { get; set; }
+        public float Latitude { get; set; }
+        public float Longitude { get; set; }
     }
 }
