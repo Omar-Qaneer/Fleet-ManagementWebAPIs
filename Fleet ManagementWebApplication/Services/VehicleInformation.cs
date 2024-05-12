@@ -31,6 +31,35 @@ namespace Fleet_ManagementWebApplication.Services
             return vehicleList;
         }
 
+        public async Task<VehicleDetail> GetVehicleInfo(int id)
+        {
+            var vehicleInfo = await _dbService.GetAsync<VehicleDetail>("SELECT VehicleNumber,VehicleType,DriverName,PhoneNumber," +
+                "CAST(Latitude AS TEXT) || ', ' || CAST(Longitude AS TEXT) AS LastPosition,VehicleMake,VehicleModel,epoch AS LastGPSTime," +
+                "vehiclespeed AS LastGPSSpeed,address AS LastAddress FROM vehiclesinformations AS vi " +
+                "LEFT JOIN Driver AS d ON d.DriverID=vi.DriverID " +
+                "INNER JOIN Vehicles AS v ON v.VehicleID=vi.VehicleID " +
+                "INNER JOIN (SELECT CAST(Latitude AS TEXT) || ', ' || CAST(Longitude AS TEXT) AS LastPosition," +
+                "epoch AS LastGPSTime,vehiclespeed AS LastGPSSpeed,address AS LastAddress " +
+                "FROM routehistory " +
+                "ORDER BY epoch Desc" +
+                "LIMIT 1) AS r ON r.VehicleID=vi.VehicleID " +
+                "AND VehicleID=@id", new { id });
+            return vehicleInfo;
+        }
+
+        public async Task<IEnumerable<VehiclesDetails>> GetVehiclesInfo()
+        {
+            var vehicleInfo = await _dbService.GetAll<VehiclesDetails>("SELECT VehicleID,VehicleNumber,VehicleType," +
+                "vehicledirection AS LastDirection,status AS LastStatus,address AS LastAddress,latitude AS LastLatitude" +
+                "longitude AS LastLongitude FROM Vehicles AS v " +
+                "INNER JOIN (SELECT vehicledirection AS LastDirection,status AS LastStatus," +
+                "address AS LastAddress,latitude AS LastLatitude " +
+                "FROM routehistory " +
+                "ORDER BY epoch Desc" +
+                "LIMIT 1) AS r ON r.VehicleID=v.VehicleID ");
+            return vehicleInfo;
+        }
+
         public async Task<IEnumerable<VehiclesInformations>> GetVehicleInformationList()
         {
             var vehicleInformationList = await _dbService.GetAll<VehiclesInformations>("SELECT * FROM vehiclesinformations");
