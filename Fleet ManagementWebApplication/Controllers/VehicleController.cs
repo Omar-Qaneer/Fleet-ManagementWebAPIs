@@ -1,6 +1,10 @@
 ﻿using Fleet_ManagementWebApplication.Models;
 using Fleet_ManagementWebApplication.Services;
+using FPro;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Concurrent;
+using System.Data;
 
 namespace Fleet_ManagementWebApplication.Controllers
 {
@@ -20,40 +24,124 @@ namespace Fleet_ManagementWebApplication.Controllers
         public async Task<IActionResult> Get() 
         {
             var result = await _vehicleService.GetVehiclesList();
+            var Gvar = new GVAR();
 
-            return Ok(result);
+            DataTable dt = new DataTable();
+            Gvar.DicOfDT.TryAdd("Vehicles",dt);
+            dt.Columns.Add("VehicleID", typeof(int));
+            dt.Columns.Add("VehicleNumber", typeof(int));
+            dt.Columns.Add("VehicleType", typeof(string));
+            foreach (var item in result)
+            {
+                DataRow newRow = dt.NewRow();
+                newRow["VehicleID"] = item.VehicleID; 
+                newRow["VehicleNumber"] = item.VehicleNumber; 
+                newRow["VehicleType"] = item.VehicleType;
+                dt.Rows.Add(newRow);
+            }
+            var sz = JsonConvert.SerializeObject(Gvar);
+
+
+            return Ok(sz);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetVehicle(int id)
         {
             var result = await _vehicleService.GetVehicle(id);
+            var Gvar = new GVAR();
+            DataTable dt = new DataTable();
+            Gvar.DicOfDT.TryAdd("Vehicles", dt);
+            Gvar.DicOfDT.TryAdd("Vehicles", dt);
+            dt.Columns.Add("VehicleID", typeof(int));
+            dt.Columns.Add("VehicleNumber", typeof(int));
+            dt.Columns.Add("VehicleType", typeof(string));
+            if (result != null)
+            {
+                ConcurrentDictionary<string,string> dic = new ConcurrentDictionary<string,string>();
+                dic.TryAdd("STS","1");
+                Gvar.DicOfDic.TryAdd("Tags",dic);
+                DataRow newRow = dt.NewRow();
+                newRow["VehicleID"] = result.VehicleID;
+                newRow["VehicleNumber"] = result.VehicleNumber;
+                newRow["VehicleType"] = result.VehicleType;
+                dt.Rows.Add(newRow);
+                var sz = JsonConvert.SerializeObject(Gvar);
 
-            return Ok(result);
+                return Ok(sz);
+            }
+            else
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                return Ok(Gvar);
+            }
+
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddVehicle([FromBody] Vehicles vehicle)
+        public async Task<IActionResult> AddVehicle([FromBody] GVAR gvar)
         {
-            var result = await _vehicleService.CreateVehicle(vehicle);
+            Vehicles vehicle = new Vehicles();
+            vehicle.VehicleNumber = int.Parse(gvar.DicOfDic["Tags"]["VehicleNumber"]);
+            vehicle.VehicleType = gvar.DicOfDic["Tags"]["VehicleType"];
+            int result = await _vehicleService.CreateVehicle(vehicle);
+            var Gvar = new GVAR();
+            if (result != 0)
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"1\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
+            else
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
 
-            return Ok(result);
+            return Ok(Gvar);
+            return Ok(vehicle);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateVehicle([FromBody] Vehicles vehicle)
+        public async Task<IActionResult> UpdateVehicle([FromBody] GVAR gvar)
         {
-            var result = await _vehicleService.UpdateVehicle(vehicle);
+            Vehicles vehicle = new Vehicles();
+            vehicle.VehicleID = int.Parse(gvar.DicOfDic["Tags"]["VehicleID"]);
+            vehicle.VehicleNumber = int.Parse(gvar.DicOfDic["Tags"]["VehicleNumber"]);
+            vehicle.VehicleType = gvar.DicOfDic["Tags"]["VehicleType"];
+            int result = await _vehicleService.UpdateVehicle(vehicle);
+            var Gvar = new GVAR();
+            if(result != 0)
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"1\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
+            else
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
 
-            return Ok(result);
+            return Ok(Gvar);
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteVehicle(int id)
         {
             var result = await _vehicleService.DeleteVehicle(id);
+            var Gvar = new GVAR();
+            if (result != 0)
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"1\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
+            else
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
 
-            return Ok(result);
+            return Ok(Gvar);
         }
     }
 }

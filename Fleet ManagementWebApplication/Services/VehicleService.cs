@@ -13,13 +13,13 @@ namespace Fleet_ManagementWebApplication.Services
             _dbService = dbService;
         }
 
-        public async Task<bool> CreateVehicle(Vehicles vehicle)
+        public async Task<int> CreateVehicle(Vehicles vehicle)
         {
-            var result =
+            int result =
                 await _dbService.EditData(
                     "INSERT INTO Vehicles (VehicleNumber,VehicleType) VALUES (@VehicleNumber, @VehicleType)",
                     vehicle);
-            return true;
+            return result;
         }
 
         public async Task<IEnumerable<Vehicles>> GetVehiclesList()
@@ -31,26 +31,23 @@ namespace Fleet_ManagementWebApplication.Services
 
         public async Task<Vehicles> GetVehicle(int id)
         {
-            var vehicleList = await _dbService.GetAsync<Vehicles>("SELECT * FROM Vehicles where vehicleid=@id", new { id });
-            Console.WriteLine("hhhhhhhhhh");
-
-            Console.WriteLine(vehicleList);
+            var vehicleList = await _dbService.GetAsync<Vehicles>("SELECT * FROM Vehicles where VehicleNumber=@id", new { id });
             return vehicleList;
         }
 
-        public async Task<Vehicles> UpdateVehicle(Vehicles vehicle)
+        public async Task<int> UpdateVehicle(Vehicles vehicle)
         {
-            var updateVehicle =
+            int updateVehicle =
                 await _dbService.EditData(
                     "Update vehicles SET vehiclenumber=@VehicleNumber, vehicletype=@VehicleType WHERE vehicleid=@VehicleID",
                     vehicle);
-            return vehicle;
+            return updateVehicle;
         }
 
-        public async Task<bool> DeleteVehicle(int id)
+        public async Task<int> DeleteVehicle(int id)
         {
-            var deleteVehicle = await _dbService.EditData("DELETE FROM vehicles WHERE vehicleid=@VehicleID", new { id });
-            return true;
+            var deleteVehicle = await _dbService.EditData("DELETE FROM vehicles WHERE VehicleNumber=@id", new { id });
+            return deleteVehicle;
         }
     }
 }
