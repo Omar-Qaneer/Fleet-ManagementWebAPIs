@@ -23,9 +23,9 @@ namespace Fleet_ManagementWebApplication.Services
 
         public async Task<RouteHistoryDetails> GetRouteHistory(int Epoch1, int Epoch2)
         {
-            var routeHistoryList = await _dbService.GetAsync<RouteHistoryDetails>("SELECT vehicleid,vehiclenumber,vehicletype,address," +
-                "status,latitude,longitude,vehicledirection,vehiclespeed AS GPSSpeed,epoch AS GPSTime FROM routehistory AS t1" +
-                " INNER JOIN Vehicles AS t2 ON t1.vehicleid = t2.vehicleid " +
+            var routeHistoryList = await _dbService.GetAsync<RouteHistoryDetails>("SELECT v.vehicleid,v.vehiclenumber,v.vehicletype,r.address," +
+                "r.status,r.latitude,r.longitude,r.vehicledirection,r.vehiclespeed AS GPSSpeed,r.epoch AS GPSTime FROM routehistory AS r" +
+                " INNER JOIN Vehicles AS v ON v.vehicleid = r.vehicleid " +
                 "AND epoch BETWEEN @Epoch1 AND @Epoch2 ", new { Epoch1, Epoch2 });
             return routeHistoryList;
         }       
