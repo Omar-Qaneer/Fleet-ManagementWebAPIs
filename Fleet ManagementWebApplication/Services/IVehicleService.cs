@@ -7,6 +7,7 @@ namespace Fleet_ManagementWebApplication.Services
         Task<int> CreateVehicle(Vehicles vehicle);
         Task<IEnumerable<Vehicles>> GetVehiclesList();
         Task<Vehicles> GetVehicle(int key);
+        Task<IEnumerable<VehiclesDetails>> GetVehiclesInfo();
         Task<int> UpdateVehicle(Vehicles vehicle);
         Task<int> DeleteVehicle(int key);
     }
