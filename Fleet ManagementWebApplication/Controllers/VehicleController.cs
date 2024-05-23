@@ -24,7 +24,7 @@ namespace Fleet_ManagementWebApplication.Controllers
         public async Task<IActionResult> Get() 
         {
             var result = await _vehicleService.GetVehiclesList();
-            var Gvar = new GVAR();
+            var Gvar = new GVAR(); 
 
             DataTable dt = new DataTable();
             Gvar.DicOfDT.TryAdd("Vehicles",dt);
@@ -51,7 +51,6 @@ namespace Fleet_ManagementWebApplication.Controllers
             var result = await _vehicleService.GetVehicle(id);
             var Gvar = new GVAR();
             DataTable dt = new DataTable();
-            Gvar.DicOfDT.TryAdd("Vehicles", dt);
             Gvar.DicOfDT.TryAdd("Vehicles", dt);
             dt.Columns.Add("VehicleID", typeof(int));
             dt.Columns.Add("VehicleNumber", typeof(int));
@@ -99,7 +98,6 @@ namespace Fleet_ManagementWebApplication.Controllers
             }
 
             return Ok(Gvar);
-            return Ok(vehicle);
         }
 
         [HttpPut]

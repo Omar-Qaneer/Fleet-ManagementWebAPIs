@@ -11,19 +11,19 @@ namespace Fleet_ManagementWebApplication.Services
         {
             _dbService = dbService;
         }
-        public async Task<bool> CreateDriver(Driver driver)
+        public async Task<int> CreateDriver(Driver driver)
         {
             var result =
                 await _dbService.EditData(
                     "INSERT INTO driver (drivername,phonenumber) VALUES (@DriverName, @PhoneNumber)",
                     driver);
-            return true;
+            return result;
         }
 
-        public async Task<bool> DeleteDriver(int id)
+        public async Task<int> DeleteDriver(int id)
         {
             var deleteDriver = await _dbService.EditData("DELETE FROM driver WHERE driverid=@id", new { id });
-            return true;
+            return deleteDriver;
         }
 
         public async Task<Driver> GetDriver(int id)
@@ -34,17 +34,17 @@ namespace Fleet_ManagementWebApplication.Services
 
         public async Task<IEnumerable<Driver>> GetDriversList()
         {
-            var driverList = await _dbService.GetAll<Driver>("SELECT * FROM drivers");
+            var driverList = await _dbService.GetAll<Driver>("SELECT * FROM driver");
             return driverList;
         }
 
-        public async Task<Driver> UpdateDriver(Driver driver)
+        public async Task<int> UpdateDriver(Driver driver)
         {
             var updateDriver =
                 await _dbService.EditData(
                     "Update driver SET drivername=@DriverName, phonenumber=@PhoneNumber WHERE driverid=@DriverID",
                     driver);
-            return driver;
+            return updateDriver;
         }
     }
 }
