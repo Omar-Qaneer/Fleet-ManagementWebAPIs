@@ -45,6 +45,41 @@ namespace Fleet_ManagementWebApplication.Controllers
             return Ok(sz);
         }
 
+        [HttpGet("VehiclesInfo")]
+        public async Task<IActionResult> GetVehiclesInfo()
+        {
+            var result = await _vehicleService.GetVehiclesInfo();
+            var Gvar = new GVAR();
+
+            DataTable dt = new DataTable();
+            Gvar.DicOfDT.TryAdd("Vehicles", dt);
+            dt.Columns.Add("VehicleID", typeof(int));
+            dt.Columns.Add("VehicleNumber", typeof(int));
+            dt.Columns.Add("VehicleType", typeof(string));
+            dt.Columns.Add("LastDirection", typeof(int));
+            dt.Columns.Add("LastStatus", typeof(string));
+            dt.Columns.Add("LastAddress", typeof(string));
+            dt.Columns.Add("LastPosition", typeof(string));
+
+            foreach (var item in result)
+            {
+                DataRow newRow = dt.NewRow();
+                newRow["VehicleID"] = item.VehicleID;
+                newRow["VehicleNumber"] = item.VehicleNumber;
+                newRow["VehicleType"] = item.VehicleType;
+                newRow["LastDirection"] = item.LastDirection;
+                newRow["LastStatus"] = item.LastStatus;
+                newRow["LastAddress"] = item.LastAddress;
+                newRow["LastPosition"] = item.LastPosition;
+
+                dt.Rows.Add(newRow);
+            }
+            var sz = JsonConvert.SerializeObject(Gvar);
+
+
+            return Ok(sz);
+        }
+
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetVehicle(int id)
         {

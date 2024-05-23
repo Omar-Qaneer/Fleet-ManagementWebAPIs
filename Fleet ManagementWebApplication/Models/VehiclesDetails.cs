@@ -8,7 +8,6 @@
         public int LastDirection { get; set; }
         public string LastStatus { get; set; }
         public string LastAddress { get; set; }
-        public float LastLatitude { get; set; }
-        public float LastLongitude { get; set; }
+        public string LastPosition { get; set; }
     }
 }
