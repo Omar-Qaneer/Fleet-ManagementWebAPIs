@@ -2,7 +2,7 @@
 
 namespace Fleet_ManagementWebApplication.Services
 {
-    public class RouteHistoryService
+    public class RouteHistoryService : IRouteHistoryService
     {
         private readonly IDbService _dbService;
 
