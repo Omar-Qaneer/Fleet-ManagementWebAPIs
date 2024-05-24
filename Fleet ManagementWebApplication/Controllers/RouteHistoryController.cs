@@ -1,4 +1,5 @@
-﻿using Fleet_ManagementWebApplication.Services;
+﻿using Fleet_ManagementWebApplication.Models;
+using Fleet_ManagementWebApplication.Services;
 using FPro;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -63,5 +64,36 @@ namespace Fleet_ManagementWebApplication.Controllers
                 return Ok(Gvar);
             }
     }
-}
+
+        [HttpPost]
+        public async Task<IActionResult> AddVehicle([FromBody] GVAR gvar)
+        {
+            RouteHistory routeHistory = new RouteHistory();
+            routeHistory.VehicleID = int.Parse(gvar.DicOfDic["Tags"]["VehicleID"]);
+            routeHistory.VehicleDirection = int.Parse(gvar.DicOfDic["Tags"]["VehicleDirection"]);
+            routeHistory.Status = char.Parse(gvar.DicOfDic["Tags"]["Status"]);
+            routeHistory.VehicleSpeed = gvar.DicOfDic["Tags"]["VehicleSpeed"];
+            routeHistory.Epoch = int.Parse(gvar.DicOfDic["Tags"]["Epoch"]);
+            routeHistory.Address = gvar.DicOfDic["Tags"]["Address"];
+            routeHistory.Latitude = float.Parse(gvar.DicOfDic["Tags"]["Latitude"]);
+            routeHistory.Longitude = float.Parse(gvar.DicOfDic["Tags"]["Longitude"]);
+
+
+
+            int result = await _routeHistoryService.CreateRouteHistory(routeHistory);
+            var Gvar = new GVAR();
+            if (result != 0)
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"1\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
+            else
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+            }
+
+            return Ok(Gvar);
+        }
+    }
 }

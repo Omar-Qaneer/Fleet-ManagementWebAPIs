@@ -11,14 +11,14 @@ namespace Fleet_ManagementWebApplication.Services
             _dbService = dbService;
         }
 
-        public async Task<bool> CreateRouteHistory(RouteHistory routeHistory)
+        public async Task<int> CreateRouteHistory(RouteHistory routeHistory)
         {
             var result =
                 await _dbService.EditData(
                     "INSERT INTO routehistory (vehicleid, vehicledirection, status, vehiclespeed, epoch," +
                     " address, latitude, longitude) VALUES (@VehicleID, @VehicleDirection, @Status, @VehicleSpeed, @Epoch, @Address, @Latitude, @Longitude)",
                     routeHistory);
-            return true;
+            return result;
         }
 
         public async Task<RouteHistoryDetails> GetRouteHistory(int vehicleId, int Epoch1, int Epoch2)
