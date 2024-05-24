@@ -14,6 +14,7 @@ using Fleet_ManagementWebApplication.Services;
         builder.Services.AddScoped<IVehicleService, VehicleService>();
         builder.Services.AddScoped<IDriver, DriverService>();
         builder.Services.AddScoped<IVehicleInformation, VehicleInformation>();
+        builder.Services.AddScoped<IRouteHistoryService, RouteHistoryService>();
         builder.Services.AddAuthorization();
         var app = builder.Build();
         // Configure the HTTP request pipeline.
