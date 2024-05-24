@@ -38,8 +38,7 @@ namespace Fleet_ManagementWebApplication.Services
                 "r.vehiclespeed AS LastGPSSpeed,r.address AS LastAddress FROM vehiclesinformations AS vi " +
                 "INNER JOIN Driver AS d ON d.DriverID=vi.DriverID " +
                 "INNER JOIN Vehicles AS v ON v.VehicleID=vi.VehicleID " +
-                "INNER JOIN (SELECT *, ROW_NUMBER() OVER (PARTITION BY VehicleID ORDER BY Epoch DESC) AS RowNum FROM routehistory) as r" +
-                "ON r.VehicleID=vi.VehicleID " +
+                "INNER JOIN (SELECT *, ROW_NUMBER() OVER (PARTITION BY VehicleID ORDER BY Epoch DESC) AS RowNum FROM routehistory) as r ON r.VehicleID=vi.VehicleID " +
                 "AND vi.vehicleid=@id limit 1", new { id });
             return vehicleInfo;
         }        

@@ -6,7 +6,7 @@
         public string VehicleType { get; set; }
         public string DriverName { get; set; }
         public int PhoneNumber { get; set; }
-        public int LastPosition { get; set; }
+        public string LastPosition { get; set; }
         public string VehicleMake { get; set; }
         public string VehicleModel { get; set; }
         public int LastGPSTime { get; set; }
