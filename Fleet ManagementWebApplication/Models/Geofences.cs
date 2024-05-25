@@ -4,7 +4,7 @@
     {
         public int GeofenceID { get; set; }
         public string GeofenceType { get; set; }
-        public int AddedDate { get; set; }
+        public long AddedDate { get; set; }
         public string StrockColor { get; set; }
         public int StrockOpacity { get; set; }
         public int StrockWeight { get; set; }
