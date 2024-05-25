@@ -141,5 +141,47 @@ namespace Fleet_ManagementWebApplication.Controllers
                 return Ok(Gvar);
             }
         }
+
+        [HttpGet("RectangleGeofences")]
+        public async Task<IActionResult> GetAllRectangleGeofence()
+        {
+            var result = await _geofencesService.GetRectangleGeofence();
+            var Gvar = new GVAR();
+
+            DataTable dt = new DataTable();
+            Gvar.DicOfDT.TryAdd("RectangleGeofences", dt);
+            dt.Columns.Add("GeofenceID", typeof(int));
+            dt.Columns.Add("North", typeof(float));
+            dt.Columns.Add("East", typeof(float));
+            dt.Columns.Add("West", typeof(float));
+            dt.Columns.Add("South", typeof(float));
+
+            if (result != null)
+            {
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "1");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                foreach (var item in result)
+                {
+                    DataRow newRow = dt.NewRow();
+                    newRow["GeofenceID"] = item.GeofenceID;
+                    newRow["North"] = item.North;
+                    newRow["East"] = item.East;
+                    newRow["West"] = item.West;
+                    newRow["South"] = item.South;
+
+                    dt.Rows.Add(newRow);
+                }
+
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
+            }
+            else
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                return Ok(Gvar);
+            }
+        }
     }
 }
