@@ -64,6 +64,45 @@ namespace Fleet_ManagementWebApplication.Controllers
                 Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
                 return Ok(Gvar);
             }
-        }        
+        }
+
+        [HttpGet("CircleGeofence")]
+        public async Task<IActionResult> GetAllCircleGeofence()
+        {
+            var result = await _geofencesService.GetCircleGeofence();
+            var Gvar = new GVAR();
+
+            DataTable dt = new DataTable();
+            Gvar.DicOfDT.TryAdd("CircleGeofence", dt);
+            dt.Columns.Add("GeofenceID", typeof(int));
+            dt.Columns.Add("Radius", typeof(int));
+            dt.Columns.Add("Latitude", typeof(float));
+            dt.Columns.Add("Longitude", typeof(float));
+
+            if (result != null)
+            {
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "1");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                foreach (var item in result)
+                {
+                    DataRow newRow = dt.NewRow();
+                    newRow["GeofenceID"] = item.GeofenceID;
+                    newRow["Radius"] = item.Radius;
+                    newRow["Latitude"] = item.Latitude;
+                    newRow["Longitude"] = item.Longitude;
+                    dt.Rows.Add(newRow);
+                }
+
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
+            }
+            else
+            {
+                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
+                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                return Ok(Gvar);
+            }
+        }
     }
 }
