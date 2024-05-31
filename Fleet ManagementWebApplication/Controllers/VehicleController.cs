@@ -59,7 +59,8 @@ namespace Fleet_ManagementWebApplication.Controllers
             dt.Columns.Add("LastDirection", typeof(int));
             dt.Columns.Add("LastStatus", typeof(string));
             dt.Columns.Add("LastAddress", typeof(string));
-            dt.Columns.Add("LastPosition", typeof(string));
+            dt.Columns.Add("LastLatitude", typeof(float));
+            dt.Columns.Add("LastLongitude", typeof(float));
 
             foreach (var item in result)
             {
@@ -70,7 +71,9 @@ namespace Fleet_ManagementWebApplication.Controllers
                 newRow["LastDirection"] = item.LastDirection;
                 newRow["LastStatus"] = item.LastStatus;
                 newRow["LastAddress"] = item.LastAddress;
-                newRow["LastPosition"] = item.LastPosition;
+                newRow["LastLatitude"] = item.LastLatitude;
+                newRow["LastLongitude"] = item.LastLongitude;
+
 
                 dt.Rows.Add(newRow);
             }

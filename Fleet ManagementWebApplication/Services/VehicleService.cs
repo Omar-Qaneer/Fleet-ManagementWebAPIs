@@ -32,7 +32,7 @@ namespace Fleet_ManagementWebApplication.Services
         {
             var vehicleInfo = await _dbService.GetAll<VehiclesDetails>("SELECT v.VehicleID, v.VehicleNumber, v.VehicleType," +
                 "r.vehicledirection as LastDirection,r.status as LastStatus, r.address as LastAddress," +
-                "CAST(r.Latitude AS TEXT) || ', ' || CAST(r.Longitude AS TEXT) AS LastPosition FROM Vehicles as v " +
+                "r.Latitude AS LastLatitude, r.Longitude AS LastLongitude FROM Vehicles as v " +
                 "RIGHT JOIN(SELECT *, ROW_NUMBER() OVER (PARTITION BY VehicleID ORDER BY Epoch DESC) AS RowNum  FROM routehistory) as r" +
                 "  ON r.VehicleID=v.VehicleID" +
                 " WHERE r.RowNum = 1;");

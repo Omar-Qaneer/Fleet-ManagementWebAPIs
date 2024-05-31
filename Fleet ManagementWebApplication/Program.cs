@@ -27,6 +27,13 @@ using Fleet_ManagementWebApplication.Services;
 
         app.MapGet("/", () => "Hello World!");
 
+        app.UseCors(options =>
+        {
+            options.AllowAnyHeader();
+            options.AllowAnyMethod();
+            options.AllowAnyOrigin();
+        });
+
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
