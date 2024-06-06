@@ -4,8 +4,8 @@
     {
         public int VehicleNumber { get; set; }
         public string VehicleType { get; set; }
-        public string DriverName { get; set; }
-        public int PhoneNumber { get; set; }
+        public string[] DriverName { get; set; }
+        public int[] PhoneNumber { get; set; }
         public string LastPosition { get; set; }
         public string VehicleMake { get; set; }
         public string VehicleModel { get; set; }

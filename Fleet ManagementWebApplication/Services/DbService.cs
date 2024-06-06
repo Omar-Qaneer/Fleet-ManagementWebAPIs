@@ -29,6 +29,12 @@ namespace Fleet_ManagementWebApplication.Services
             return await _db.QueryAsync<T>(command);
         }
 
+        public async Task<IEnumerable<T>> GetAll<T>(string command, object parms)
+        {
+
+            return await _db.QueryAsync<T>(command,parms);
+        }
+
         public async Task<int> EditData(string command, object parms)
         {
             int result;

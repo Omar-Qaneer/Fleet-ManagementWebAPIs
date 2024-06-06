@@ -126,16 +126,21 @@ namespace Fleet_ManagementWebApplication.Controllers
             var Gvar = new GVAR();
             if (result != 0)
             {
-                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"1\"}},\"DicOfDT\": { }}";
-                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "1");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
             }
             else
             {
-                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
-                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "0");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
             }
 
-            return Ok(Gvar);
         }
 
         [HttpPut]
@@ -149,16 +154,21 @@ namespace Fleet_ManagementWebApplication.Controllers
             var Gvar = new GVAR();
             if(result != 0)
             {
-                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"1\"}},\"DicOfDT\": { }}";
-                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "1");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
             }
             else
             {
-                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
-                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "0");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
             }
 
-            return Ok(Gvar);
         }
 
         [HttpDelete("{id:int}")]
@@ -168,16 +178,22 @@ namespace Fleet_ManagementWebApplication.Controllers
             var Gvar = new GVAR();
             if (result != 0)
             {
-                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"1\"}},\"DicOfDT\": { }}";
-                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "1");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
             }
             else
             {
-                var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
-                Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "0");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
+
             }
 
-            return Ok(Gvar);
         }
     }
 }

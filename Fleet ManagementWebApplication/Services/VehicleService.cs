@@ -57,8 +57,22 @@ namespace Fleet_ManagementWebApplication.Services
 
         public async Task<int> DeleteVehicle(int id)
         {
-            var deleteVehicle = await _dbService.EditData("DELETE FROM vehicles WHERE VehicleNumber=@id", new { id });
+            var vehicleData = await _dbService.GetAsync<Vehicles>("SELECT * FROM vehiclesinformations where vehicleid=@id", new { id });
+            var deleteVehicle  = 0;
+            if (vehicleData != null)
+            {
+                var deleteVehicleInfo = await _dbService.EditData("DELETE FROM vehiclesinformations WHERE vehicleid=@id", new { id });
+                if (deleteVehicleInfo != 0)
+                {
+                    deleteVehicle = await _dbService.EditData("DELETE FROM vehicles WHERE vehicleid=@id", new { id });
+                }
+            }
+            else
+            {
+                deleteVehicle = await _dbService.EditData("DELETE FROM vehicles WHERE vehicleid=@id", new { id });
+            }
             return deleteVehicle;
+            
         }
     }
 }

@@ -7,6 +7,6 @@
         public int DriverID { get; set; }
         public string VehicleMake { get; set; }
         public string VehicleModel { get; set; }
-        public int PurchaseDate { get; set; }
+        public long PurchaseDate { get; set; }
     }
 }

@@ -4,7 +4,7 @@ namespace Fleet_ManagementWebApplication.Services
 {
     public interface IVehicleInformation
     {
-        Task<bool> CreateVehicleInformation(VehiclesInformations vehicleInformation);
+        Task<int> CreateVehicleInformation(VehiclesInformations vehicleInformation);
         Task<IEnumerable<VehiclesInformations>> GetVehicleInformationList();
         Task<VehiclesInformations> GetVehicleInformation(int key);
         Task<VehicleDetail> GetVehicleInfo(int key);

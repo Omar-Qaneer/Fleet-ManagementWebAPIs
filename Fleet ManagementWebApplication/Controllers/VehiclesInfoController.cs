@@ -27,13 +27,13 @@ namespace Fleet_ManagementWebApplication.Controllers
                 var Gvar = new GVAR();
 
                 DataTable dt = new DataTable();
-                Gvar.DicOfDT.TryAdd("Vehicles", dt);
+                Gvar.DicOfDT.TryAdd("VehicleInformation", dt);
                 dt.Columns.Add("ID", typeof(int));
                 dt.Columns.Add("VehicleID", typeof(int));
                 dt.Columns.Add("DriverID", typeof(int));
                 dt.Columns.Add("VehicleMake", typeof(string));
                 dt.Columns.Add("VehicleModel", typeof(string));
-                dt.Columns.Add("PurchaseDate", typeof(int));
+                dt.Columns.Add("PurchaseDate", typeof(long));
 
                 foreach (var item in result)
                 {
@@ -63,12 +63,12 @@ namespace Fleet_ManagementWebApplication.Controllers
             Gvar.DicOfDT.TryAdd("VehicleInformation", dt);
             dt.Columns.Add("VehicleNumber", typeof(int));
             dt.Columns.Add("VehicleType", typeof(string));
-            dt.Columns.Add("DriverName", typeof(string));
-            dt.Columns.Add("PhoneNumber", typeof(int));
+            dt.Columns.Add("DriverName", typeof(string[]));
+            dt.Columns.Add("PhoneNumber", typeof(int[]));
             dt.Columns.Add("LastPosition", typeof(string));
             dt.Columns.Add("VehicleMake", typeof(string));
             dt.Columns.Add("VehicleModel", typeof(string));
-            dt.Columns.Add("LastGPSTime", typeof(int));
+            dt.Columns.Add("LastGPSTime", typeof(long));
             dt.Columns.Add("LastGPSSpeed", typeof(string));
             dt.Columns.Add("LastAddress", typeof(string));
 
@@ -101,6 +101,39 @@ namespace Fleet_ManagementWebApplication.Controllers
                 var sz = "{\"DicOfDic\": {\"Tags\": {\"STS\":\"0\"}},\"DicOfDT\": { }}";
                 Gvar = JsonConvert.DeserializeObject<GVAR>(sz);
                 return Ok(Gvar);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddVehicleInfo([FromBody] GVAR gvar)
+        {
+
+
+            VehiclesInformations vehicleInfo = new VehiclesInformations();
+            vehicleInfo.VehicleID = int.Parse(gvar.DicOfDic["Tags"]["VehicleID"]);
+            vehicleInfo.DriverID = int.Parse(gvar.DicOfDic["Tags"]["DriverID"]);
+            vehicleInfo.VehicleMake = gvar.DicOfDic["Tags"]["VehicleMake"];
+            vehicleInfo.VehicleModel = gvar.DicOfDic["Tags"]["VehicleModel"];
+            vehicleInfo.PurchaseDate = long.Parse(gvar.DicOfDic["Tags"]["PurchaseDate"]);
+
+            int result = await _vehicleInfoService.CreateVehicleInformation(vehicleInfo);
+
+            var Gvar = new GVAR();
+            if (result != 0)
+            {
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "1");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
+            }
+            else
+            {
+                ConcurrentDictionary<string, string> dic = new ConcurrentDictionary<string, string>();
+                dic.TryAdd("STS", "0");
+                Gvar.DicOfDic.TryAdd("Tags", dic);
+                var sz = JsonConvert.SerializeObject(Gvar);
+                return Ok(sz);
             }
         }
     }
